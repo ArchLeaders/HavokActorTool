@@ -124,7 +124,7 @@ namespace HavokActorTool
             byte[] hkrbCacheBytes = Yaz0.Decompress(new Resource("Resources.HKRBCache.sjson").Data);
             Dictionary<long, string> hkrbDictionary = JsonSerializer.Deserialize<Dictionary<long, string>>(hkrbCacheBytes) ?? new();
 
-            long nearest = 0;
+            long nearest = -1;
             if (BaseActor == null) {
 
                 // Get closest match
@@ -133,11 +133,16 @@ namespace HavokActorTool
             }
             else {
                 foreach (var item in hkrbDictionary) {
-                    if (item.Value == BaseActor) {
+                    if (item.Value.ToLower() == BaseActor.ToLower()) {
                         nearest = item.Key;
                         Print($"{MethodHeader} Found {hkrbDictionary[nearest]} at {nearest}");
                     }
                 }
+            }
+
+            if (nearest == -1) {
+                Print($"!error||Could not find base actor '{BaseActor}' in size dictionary. Terminating process.");
+                return new($"Could not find base actor '{BaseActor}' in size dictionary.Terminating process.", "ActorBuilder Exception");
             }
 
             // Prep mod folder
@@ -251,10 +256,8 @@ namespace HavokActorTool
                     Environment.Exit(3);
                 }
 
-                if (!IsOverwrite) {
-                    foreach (var prop in actor.Hash) {
-                        havokActor.Hash.Add(prop.Key, prop.Value.ShallowCopy());
-                    }
+                foreach (var prop in actor.Hash) {
+                    havokActor.Hash.Add(prop.Key, prop.Value.ShallowCopy());
                 }
 
                 havokActor.Hash["instSize"].Int64 = HKRBSize;
