@@ -66,7 +66,7 @@ namespace HavokActorTool.Common
             return answer.Key == ConsoleKey.Y;
         }
 
-        public static void WriteLine(object message)
+        public static void Print(object message)
         {
             if (message.ToString()!.Contains("||"))
             {
