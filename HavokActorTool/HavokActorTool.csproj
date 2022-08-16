@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\BLifeCondition.aamp" />
+    <None Remove="Resources\Headers.json" />
+    <None Remove="Resources\HKRBCache.sjson" />
+    <None Remove="Resources\HKX2.sbphysics" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\BLifeCondition.aamp" />
+    <EmbeddedResource Include="Resources\Headers.json" />
+    <EmbeddedResource Include="Resources\HKRBCache.sjson" />
+    <EmbeddedResource Include="Resources\HKX2.sbphysics" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AampLibrary" Version="1.0.7" />
+    <PackageReference Include="BfresLibrary" Version="1.0.0" />
+    <PackageReference Include="BymlLibrary" Version="1.1.2" />
+    <PackageReference Include="SarcLibrary" Version="1.0.5" />
+    <PackageReference Include="Yaz0Library" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="C:\Users\ArchLeaders\.nuget\packages\yaz0library\1.0.2\contentFiles\any\net6.0\Lib\Yaz0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="C:\Users\ArchLeaders\.nuget\packages\yaz0library\1.0.3\contentFiles\any\net6.0\Lib\Yaz0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

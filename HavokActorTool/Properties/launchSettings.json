@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HavokActorTool": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\ActorBuilderTests\\TwnObj_TempleOfTime_Base_A_01C.hkrb -s -b TwnObj_TempleOfTime_Base_A_01"
+    }
+  }
+}
