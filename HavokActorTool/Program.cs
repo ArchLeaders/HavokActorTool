@@ -14,7 +14,7 @@ foreach (var _arg in args) {
     var arg = _arg.ToLower();
 
     if (baseActor == "!pending") {
-        baseActor = arg;
+        baseActor = _arg;
     }
     else if (arg == "-s" || arg == "-switch" || arg == "-nx") {
         nx = true;
