@@ -1,4 +1,6 @@
-﻿using Aamp.Security.Cryptography;
+﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+using Aamp.Security.Cryptography;
 using HavokActorTool.Actor;
 using HavokActorTool.Common;
 using Microsoft.VisualBasic.FileIO;
@@ -99,9 +101,6 @@ namespace HavokActorTool
             // Create data dirs
             Directory.CreateDirectory(ModFolder);
 
-            // REFERENCE
-            // Print($"{Func}");
-
             // Handle existing files/folders
             if (File.Exists(ActorPack) || Directory.Exists(ActorPack)) {
                 timer.Stop();
@@ -117,36 +116,28 @@ namespace HavokActorTool
                 timer.Start();
             }
 
-            // Find nearest HKRB match
-            Print($"{MethodHeader} Searching HKRB file dictionary. . .");
-
-            // Get HKRB Dictionary
-            byte[] hkrbCacheBytes = Yaz0.Decompress(new Resource("Resources.HKRBCache.sjson").Data);
-            Dictionary<long, string> hkrbDictionary = JsonSerializer.Deserialize<Dictionary<long, string>>(hkrbCacheBytes) ?? new();
-
             long nearest = -1;
             if (BaseActor == null) {
 
+                // Find nearest HKRB match
+                Print($"{MethodHeader} Searching HKRB file dictionary. . .");
+
+                // Get HKRB Dictionary
+                byte[] hkrbCacheBytes = Yaz0.Decompress(new Resource("Resources.HKRBCache.sjson").Data);
+                Dictionary<long, string> hkrbDictionary = JsonSerializer.Deserialize<Dictionary<long, string>>(hkrbCacheBytes) ?? new();
+
                 // Get closest match
                 nearest = hkrbDictionary.Keys.OrderBy(x => Math.Abs(x - HKRBSize)).First();
-                Print($"{MethodHeader} Found {hkrbDictionary[nearest]} at {nearest}");
-            }
-            else {
-                foreach (var item in hkrbDictionary) {
-                    if (item.Value.ToLower() == BaseActor.ToLower()) {
-                        nearest = item.Key;
-                        Print($"{MethodHeader} Found {hkrbDictionary[nearest]} at {nearest}");
-                    }
+                if (nearest == -1) {
+                    Print($"!error||Could not find base actor '{BaseActor}' in size dictionary. Terminating process.");
+                    return new($"Could not find base actor '{BaseActor}' in size dictionary.Terminating process.", "ActorBuilder Exception");
                 }
-            }
 
-            if (nearest == -1) {
-                Print($"!error||Could not find base actor '{BaseActor}' in size dictionary. Terminating process.");
-                return new($"Could not find base actor '{BaseActor}' in size dictionary.Terminating process.", "ActorBuilder Exception");
+                BaseActor = hkrbDictionary[nearest];
+                Print($"{MethodHeader} Found {hkrbDictionary[nearest]} at {nearest}");
             }
 
             // Prep mod folder
-            BaseActor = hkrbDictionary[nearest];
             string? game;
             string? update;
 
@@ -276,19 +267,6 @@ namespace HavokActorTool
 
                 File.WriteAllBytes(actorinfoFile, Yaz0.CompressFast(actorinfo.ToBinary()));
 
-                // Handle in python because it's faster and just works better
-                // 
-                // if (File.Exists($"{ModFolder}\\content\\Actor\\ActorInfo.product.sbyml")) {
-                //     await PythonInterop.Call("add_actorinfo_entry.py", $"\"{ModFolder}\\content\\Actor\\ActorInfo.product.sbyml\"", HKRBSize.ToString(), FullName, $"{PartialName}");
-                // }
-                // else if (File.Exists($"{ModFolder}\\logs\\actorinfo.yml")) {
-                //     await PythonInterop.Call("add_actorinfo_entry.py", $"\"{update}\\Actor\\ActorInfo.product.sbyml\"", HKRBSize.ToString(), FullName, $"{PartialName}", $"\"{ModFolder}\\logs\\actorinfo.yml\"");
-                // }
-                // else {
-                //     File.Copy($"{update}\\Actor\\ActorInfo.product.sbyml", $"{ModFolder}\\content\\Actor\\ActorInfo.product.sbyml");
-                //     await PythonInterop.Call("add_actorinfo_entry.py", $"\"{ModFolder}\\content\\Actor\\ActorInfo.product.sbyml\"", HKRBSize.ToString(), FullName, $"{PartialName}");
-                // }
-
             }));
 
             // Add HKRB file
@@ -298,7 +276,6 @@ namespace HavokActorTool
             }));
 
             // Edit SBFRES files
-            // !! Needs to handle existing files !!
             edit.Add(Task.Run(() => {
                 Print($"{MethodHeader} Parsing Cafe Resources. . .");
 
