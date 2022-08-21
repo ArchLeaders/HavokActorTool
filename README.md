@@ -29,3 +29,9 @@ HavokActorTool.exe <path/to/file.hkrb> [-s|--switch] [-f|-formatname] [-n|--newm
     *Note: Assigning a base actor could make the [instSize](https://zeldamods.org/wiki/ActorInfo.product.sbyml#Actors) unstable, if the game crashes when
     loading your actor try increasing the value by a margin of `1,000-10,000`
     until it works.*
+
+## Thanks:
+
+**GingerAvalanche**: ActorInfo help, BYML library.<br>
+**KillzXGaming**: Library help and creation.<br>
+**Nivium**: Debugging and early testing.<br>
