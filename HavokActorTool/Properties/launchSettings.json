@@ -2,8 +2,8 @@
   "profiles": {
     "HavokActorTool": {
       "commandName": "Project",
-      "commandLineArgs": "D:\\Botw\\Mods\\Experiments\\testcollision\\TestCollison.hkrb -s -b FldObj_SecretBaseFrogStatue_A_01",
-      "workingDirectory": "D:\\Botw\\Mods\\Experiments\\testcollision"
+      "commandLineArgs": "\"D:\\bin\\.todo\\HavokActorTool\\FldObj_Village_Furnace_A.hkrb\"",
+      "workingDirectory": "D:\\bin\\.todo\\HavokActorTool"
     }
   }
 }
