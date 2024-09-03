@@ -193,17 +193,13 @@ namespace HavokActorTool
             }
 
             timer.Start();
-            string lifeCondition = int.Parse(lifeConditionInput) < 1000 ?
-                $"{lifeConditionInput}m" : int.Parse(lifeConditionInput) / 1000 > 9 ?
-                $"{int.Parse(lifeConditionInput) / 1000}km" : $"0{int.Parse(lifeConditionInput) / 1000}km";
+            string lifeCondition = $"{lifeConditionInt}m";
 
             // Iterate SARC files
             foreach (var file in actorpack.Files.Keys) {
 
                 // Edit BLifeCondition
-                if (file.EndsWith(".blifecondition")) {
-                    edit.Add(BLifeCondition.Create(ref files, $"{file}|Landmark{lifeCondition}.blifecondition", FullName, lifeConditionInt));
-                }
+                edit.Add(BLifeCondition.Create(ref files, $"{file}|Landmark{lifeCondition}.blifecondition", FullName, lifeConditionInt));
 
                 // Edit BMmodelList
                 if (file.EndsWith(".bmodellist") && NewModel) {

@@ -16,16 +16,7 @@ namespace HavokActorTool.Actor
             // Notify interface
             Print($"{MethodHeader} Modify binary life condition (BLIFECONDITION) . . .");
 
-            // Set life condition data
-            AampFile blifecondition;
-            if (dict.ContainsKey(key)) {
-                blifecondition = new(dict[key.Split('|')[0]]);
-            }
-            else {
-                blifecondition = new(Yaz0.DecompressFast(new Resource("Resources.BLifeCondition.aamp").Data));
-            }
-
-            // Update ref
+            AampFile blifecondition = new(Yaz0.DecompressFast(new Resource("Resources.BLifeCondition.aamp").Data));
             blifecondition.RootNode.ParamObjects[0].ParamEntries[0].Value = lifeCondition;
             dict[key] = blifecondition.ToBinary();
 
