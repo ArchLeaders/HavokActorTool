@@ -1,20 +1,16 @@
 ﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
+using System.Diagnostics;
+using System.Text.Json;
 using Aamp.Security.Cryptography;
+using CsYaz0;
+using CsYaz0.Marshalling;
 using HavokActorTool.Actor;
 using HavokActorTool.Common;
 using Microsoft.VisualBasic.FileIO;
 using Nintendo.Bfres;
 using Nintendo.Byml;
 using Nintendo.Sarc;
-using Nintendo.Yaz0;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace HavokActorTool
 {
@@ -172,7 +168,7 @@ namespace HavokActorTool
             }
 
             // Open actorpack
-            SarcFile actorpack = new(Yaz0.DecompressFast(File.ReadAllBytes(ActorPack)));
+            SarcFile actorpack = new(Yaz0.Decompress(File.ReadAllBytes(ActorPack)));
 
             // Stage actorpack edits
             List<Task> edit = new();
@@ -228,7 +224,7 @@ namespace HavokActorTool
                 }
 
                 // Create byml instance
-                BymlFile actorinfo = new(Yaz0.DecompressFast($"{ModFolder}\\Actor\\ActorInfo.product.sbyml"));
+                BymlFile actorinfo = new(Yaz0.Decompress(File.ReadAllBytes($"{ModFolder}\\Actor\\ActorInfo.product.sbyml")));
                 BymlNode havokActor = new(new Dictionary<string, BymlNode>() { });
                 BymlNode actor = null!;
                 foreach (var _actor in actorinfo.RootNode.Hash["Actors"].Array) {
@@ -261,8 +257,9 @@ namespace HavokActorTool
                     actorinfo.RootNode.Hash["Hashes"].Array.Add(new BymlNode(Crc32.Compute(FullName)));
                 }
 
-                File.WriteAllBytes(actorinfoFile, Yaz0.CompressFast(actorinfo.ToBinary()));
-
+                using FileStream fs = File.Create(actorinfoFile);
+                DataMarshal compressed = Yaz0.Compress(actorinfo.ToBinary());
+                fs.Write(compressed.AsSpan());
             }));
 
             // Add HKRB file
@@ -296,7 +293,7 @@ namespace HavokActorTool
                         copied = true;
                     }
 
-                    BfresFile bfres = new(new MemoryStream(Yaz0.DecompressFast(destBfres))) {
+                    BfresFile bfres = new(new MemoryStream(Yaz0.Decompress(File.ReadAllBytes(destBfres)))) {
                         Name = resource.Value.Key
                     };
 
@@ -318,9 +315,10 @@ namespace HavokActorTool
 
                     using var stream = new MemoryStream();
                     bfres.ToBinary(stream);
-                    byte[] bfresBytes = Yaz0.CompressFast(stream.ToArray());
+                    DataMarshal bfresBytes = Yaz0.Compress(stream.ToArray());
 
-                    File.WriteAllBytes(destBfres, bfresBytes);
+                    using FileStream fs = File.Create(destBfres);
+                    fs.Write(bfresBytes.AsSpan());
                 }
             }));
 
@@ -339,7 +337,9 @@ namespace HavokActorTool
 
             // Write SARC file
             Print($"{MethodHeader} Writing actorpack. . .");
-            File.WriteAllBytes(ActorPack, Yaz0.CompressFast(actorpack.ToBinary(), 7));
+            DataMarshal compressed = Yaz0.Compress(actorpack.ToBinary(), 7);
+            await using FileStream fs = File.Create(ActorPack);
+            fs.Write(compressed.AsSpan());
 
             timer.Stop();
             Print($"{MethodHeader} Completed in {timer.ElapsedMilliseconds / 1000.0} seconds");

@@ -1,10 +1,5 @@
-﻿using Nintendo.Aamp;
-using Nintendo.Yaz0;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CsYaz0;
+using Nintendo.Aamp;
 
 namespace HavokActorTool.Actor
 {
@@ -16,7 +11,7 @@ namespace HavokActorTool.Actor
             // Notify interface
             Print($"{MethodHeader} Modify binary life condition (BLIFECONDITION) . . .");
 
-            AampFile blifecondition = new(Yaz0.DecompressFast(new Resource("Resources.BLifeCondition.aamp").Data));
+            AampFile blifecondition = new(Yaz0.Decompress(new Resource("Resources.BLifeCondition.aamp").Data));
             blifecondition.RootNode.ParamObjects[0].ParamEntries[0].Value = lifeCondition;
             dict[key] = blifecondition.ToBinary();
 

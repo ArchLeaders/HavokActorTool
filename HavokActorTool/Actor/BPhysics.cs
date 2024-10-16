@@ -1,10 +1,5 @@
-﻿using Nintendo.Aamp;
-using Nintendo.Yaz0;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CsYaz0;
+using Nintendo.Aamp;
 
 namespace HavokActorTool.Actor
 {
@@ -17,7 +12,7 @@ namespace HavokActorTool.Actor
             Print($"{MethodHeader} Modify binary physics (BPHYSICS) . . .");
 
             // Parse bphysics
-            AampFile bphysics = new(Yaz0.DecompressFast(new Resource("Resources.HKX2.sbphysics").Data));
+            AampFile bphysics = new(Yaz0.Decompress(new Resource("Resources.HKX2.sbphysics").Data));
 
             // Update physics file
             bphysics.RootNode.ChildParams[0].ChildParams[0].ChildParams[0].ParamObjects[0].ParamEntries[3].Value = new StringEntry($"{modelName}/{actorName}.hkrb");

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -25,8 +25,8 @@
     <PackageReference Include="AampLibrary" Version="1.0.7" />
     <PackageReference Include="BfresLibrary" Version="1.0.0" />
     <PackageReference Include="BymlLibrary" Version="1.1.2" />
+    <PackageReference Include="CsYaz0" Version="1.0.2" />
     <PackageReference Include="SarcLibrary" Version="1.0.5" />
-    <PackageReference Include="Yaz0Library" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>
