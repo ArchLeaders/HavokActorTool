@@ -44,18 +44,9 @@ jobs:
           - name: Windows (x64)
             os: ubuntu-latest
             runtime: win-x64
-          - name: Windows (arm64)
-            os: ubuntu-latest
-            runtime: win-arm64
           - name: Linux (x64)
             os: ubuntu-latest
             runtime: linux-x64
-          - name: Linux (arm64)
-            os: ubuntu-latest
-            runtime: linux-arm64
-          - name: MacOS (x64)
-            os: ubuntu-latest
-            runtime: osx-x64
           - name: MacOS (arm64)
             os: ubuntu-latest
             runtime: osx-arm64
