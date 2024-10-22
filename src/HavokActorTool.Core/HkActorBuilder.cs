@@ -22,7 +22,7 @@ public static class HkActorBuilder
             return null;
         }
 
-        long instSize = isNx ? hkrbFile.Length : hkrbFile.Length * 4;
+        int instSize = (int)(isNx ? hkrbFile.Length : hkrbFile.Length * 4);
 
         Sarc actorPack = GetBaseActor(actor, instSize, isNx);
         RemoveUnusedEntries(actorPack);
@@ -71,7 +71,7 @@ public static class HkActorBuilder
             = File.ReadAllBytes(actor.HkrbFilePath);
     }
 
-    private static void BuildActorInfo(HkActor actor, Byml actorInfo, long instSize)
+    private static void BuildActorInfo(HkActor actor, Byml actorInfo, int instSize)
     {
         uint baseActorHash = Crc32.Compute(actor.BaseActorName!);
         uint currentActorHash = Crc32.Compute(actor.Name);
