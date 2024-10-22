@@ -2,26 +2,33 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace HavokActorTool.Core;
 
-public sealed partial class HkActor : ObservableObject
+public sealed partial class HkActor(
+    string hkrbFilePath,
+    string name,
+    string outputModFolder,
+    string? modelName,
+    string? baseActorName = null,
+    bool useCustomModel = false,
+    float lifeCondition = 500) : ObservableObject
 {
     [ObservableProperty]
-    private string _hkrbFilePath = string.Empty;
-    
+    private string _hkrbFilePath = hkrbFilePath;
+
     [ObservableProperty]
-    private string _name = string.Empty;
-    
+    private string _name = name;
+
     [ObservableProperty]
-    private string _modelName = string.Empty;
-    
+    private string _outputModFolder = outputModFolder;
+
     [ObservableProperty]
-    private string? _baseActorName = string.Empty;
-    
+    private string _modelName = modelName ?? name;
+
     [ObservableProperty]
-    private string? _customModelBfresPath = string.Empty;
-    
+    private string? _baseActorName = baseActorName;
+
     [ObservableProperty]
-    private string _outputModFolder = string.Empty;
-    
+    private bool _useCustomModel = useCustomModel;
+
     [ObservableProperty]
-    private float _lifeCondition = 500;
+    private float _lifeCondition = lifeCondition;
 }
