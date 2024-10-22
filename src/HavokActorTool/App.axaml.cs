@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
@@ -9,6 +10,9 @@ namespace HavokActorTool;
 
 public partial class App : Application
 {
+    public static TopLevel XamlRoot => ((IClassicDesktopStyleApplicationLifetime)Current?.ApplicationLifetime!)
+        .MainWindow!;
+    
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
