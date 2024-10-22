@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "HavokActorTool": {
-      "commandName": "Project",
-      "commandLineArgs": "\"D:\\bin\\.todo\\HavokActorTool\\FldObj_Village_Furnace_A.hkrb\"",
-      "workingDirectory": "D:\\bin\\.todo\\HavokActorTool"
-    }
-  }
-}
