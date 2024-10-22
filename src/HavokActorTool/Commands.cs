@@ -52,11 +52,11 @@ public static class Commands
             return;
         }
 
-        Console.WriteLine(Chalk.BrightGreen.Bold.Underline +
-                          "Actor built successfully.");
-        Console.WriteLine(Chalk.BrightBlue.Italic.Underline +
+        Console.WriteLine(Chalk.BrightGreen.Bold +
+                          "\nActor built successfully.");
+        Console.WriteLine(Chalk.Italic.Underline +
                           results.ActorPath);
-        Console.WriteLine(Chalk.BgGreen.BrightGreen.Bold +
+        Console.WriteLine(Chalk.BrightGreen.Bold +
                           $"\nElapsed: {watch.ElapsedMilliseconds}ms");
     }
     
