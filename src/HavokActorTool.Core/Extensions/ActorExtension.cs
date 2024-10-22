@@ -14,7 +14,7 @@ public static class ActorExtension
         
         using MemoryStream actorLinkMemoryStream = new(
             actorLinkBuffer.Array!,
-            writable: false, index: 0, count: actorLinkBuffer.Count
+            writable: false, index: actorLinkBuffer.Offset, count: actorLinkBuffer.Count
         );
         
         return AampFile.FromBinary(actorLinkMemoryStream);

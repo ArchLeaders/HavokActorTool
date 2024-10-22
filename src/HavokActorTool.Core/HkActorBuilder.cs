@@ -5,6 +5,7 @@ using BymlLibrary.Nodes.Containers;
 using CommunityToolkit.HighPerformance.Buffers;
 using CsYaz0;
 using HavokActorTool.Core.ActorParams;
+using HavokActorTool.Core.Common;
 using HavokActorTool.Core.Extensions;
 using HavokActorTool.Core.IO;
 using Nintendo.Aamp;
@@ -81,8 +82,8 @@ public static class HkActorBuilder
         int currentIndex = -1;
         int baseIndex = -1;
 
-        while ((currentIndex < 0 || baseIndex < 0) && i < hashes.Count) {
-            uint store = hashes[++i].Get<uint>();
+        while ((currentIndex < 0 || baseIndex < 0) && ++i < hashes.Count) {
+            uint store = Convert.ToUInt32(hashes[i].Value);
             if (store == currentActorHash) {
                 currentIndex = i;
             }
@@ -103,9 +104,9 @@ public static class HkActorBuilder
 
         if (currentIndex < 0) {
             hashes.Add(currentActorHash);
-            hashes.Sort();
+            hashes.Sort(BymlHashComparer.Instance);
             currentIndex = hashes.FindIndex(
-                hash => hash.Get<uint>() == currentActorHash);
+                hash => Convert.ToUInt32(hash.Value) == currentActorHash);
             actors.Insert(currentIndex, entry);
         }
         else {

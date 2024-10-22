@@ -25,7 +25,7 @@ public class LifeConditionBuilder()
                 ParamEntries = [
                     new ParamEntry {
                         HashString = "Item",
-                        Value = "Bounding.Y",
+                        Value = new StringEntry("Bounding.Y"),
                         ParamType = ParamType.StringRef
                     }
                 ]
@@ -35,7 +35,7 @@ public class LifeConditionBuilder()
                 ParamEntries = [
                     new ParamEntry {
                         HashString = "Item",
-                        Value = "NoLimit",
+                        Value = new StringEntry("NoLimit"),
                         ParamType = ParamType.StringRef
                     }
                 ]
