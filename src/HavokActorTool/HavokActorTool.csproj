@@ -8,34 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\BLifeCondition.aamp" />
-    <None Remove="Resources\Headers.json" />
-    <None Remove="Resources\HKRBCache.sjson" />
-    <None Remove="Resources\HKX2.sbphysics" />
+    <ProjectReference Include="..\HavokActorTool.Core\HavokActorTool.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\BLifeCondition.aamp" />
-    <EmbeddedResource Include="Resources\Headers.json" />
-    <EmbeddedResource Include="Resources\HKRBCache.sjson" />
-    <EmbeddedResource Include="Resources\HKX2.sbphysics" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AampLibrary" Version="1.0.7" />
-    <PackageReference Include="BfresLibrary" Version="1.0.0" />
-    <PackageReference Include="BymlLibrary" Version="1.1.2" />
-    <PackageReference Include="CsYaz0" Version="1.0.2" />
-    <PackageReference Include="SarcLibrary" Version="1.0.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="C:\Users\ArchLeaders\.nuget\packages\yaz0library\1.0.2\contentFiles\any\net6.0\Lib\Yaz0.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="C:\Users\ArchLeaders\.nuget\packages\yaz0library\1.0.3\contentFiles\any\net6.0\Lib\Yaz0.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <PackageReference Include="ConsoleAppFramework" Version="5.2.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
