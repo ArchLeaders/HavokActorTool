@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ConsoleAppFramework;
 using HavokActorTool.Core;
 using Kokuban;
@@ -21,8 +22,8 @@ public static class Commands
         [Argument] string hkrb,
         [Argument] string actorName,
         [Argument] string outputModPath,
-        string? modelName = "Actor name",
-        string? baseActorName = "Actor with the nearest instance size value",
+        string? modelName = null,
+        string? baseActorName = null,
         bool useCustomModel = false,
         float lifeCondition = 500)
     {
@@ -31,14 +32,32 @@ public static class Commands
             goto Run;
         }
         
-        Console.Write(Chalk.Yellow.Bold["The output actor already exists, would you like to replace it? [y/N] "]);
+        Console.Write(Chalk.Yellow.Bold +
+                      "The output actor already exists, would you like to replace it? [y/N] ");
         if (Console.ReadLine() is not { Length: > 0 } response || response[0] is not ('Y' or 'y')) {
             return;
         }
 
     Run:
+        var watch = Stopwatch.StartNew();
+        
         HkActor actor = new(hkrb, actorName, outputModPath, modelName, baseActorName, useCustomModel, lifeCondition);
-        HkActorBuilder.Build(actor);
+        HkActorBuildResults? results = HkActorBuilder.Build(actor);
+        
+        watch.Stop();
+
+        if (results is null) {
+            Console.WriteLine(Chalk.BrightRed.Bold.Underline +
+                              "The actor failed to build. Please check your input and try again.");
+            return;
+        }
+
+        Console.WriteLine(Chalk.BrightGreen.Bold.Underline +
+                          "Actor built successfully.");
+        Console.WriteLine(Chalk.BrightBlue.Italic.Underline +
+                          results.ActorPath);
+        Console.WriteLine(Chalk.BgGreen.BrightGreen.Bold +
+                          $"\nElapsed: {watch.ElapsedMilliseconds}ms");
     }
     
     /// <summary>
@@ -49,11 +68,15 @@ public static class Commands
     public static void ConfigCommand(string? gameUpdatePath = null, string? gamePathNx = null)
     {
         if (gameUpdatePath is not null) {
+            Console.WriteLine(Chalk.Italic + "Updated WiiU game update path.");
             HkConfig.Shared.GameUpdatePath = gameUpdatePath;
         }
         
         if (gamePathNx is not null) {
+            Console.WriteLine(Chalk.Italic + "Updated NX game path.");
             HkConfig.Shared.GamePathNx = gamePathNx;
         }
+
+        HkConfig.Shared.Save();
     }
 }
