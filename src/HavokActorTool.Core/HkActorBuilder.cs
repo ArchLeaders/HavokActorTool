@@ -47,20 +47,23 @@ public static class HkActorBuilder
         AampFile actorLink = pack.GetNested(baseActorLinkKey);
         pack.Remove(baseActorLinkKey);
 
-        string baseModelListKey = $"Actor/ModelList/{actor.BaseActorName}.bmodellist";
-        AampFile modelList = pack.GetNested(baseModelListKey);
-        pack.Remove(baseModelListKey);
+        if (actor.UseCustomModel) {
+            string baseModelListKey = $"Actor/ModelList/{actor.BaseActorName}.bmodellist";
+            AampFile modelList = pack.GetNested(baseModelListKey);
+            pack.Remove(baseModelListKey);
+
+            ModelListBuilder.Build(modelList, actor.ModelName, actor.Name);
+            pack[$"Actor/ModelList/{actor.Name}.bmodellist"] = modelList.ToBinary();
+        }
 
         AampFile lifeCondition = LifeConditionBuilder.Build(actor.LifeCondition, out string lifeConditionUser);
         pack[$"Actor/LifeCondition/{lifeConditionUser}.blifecondition"] = lifeCondition.ToBinary();
 
-        ModelListBuilder.Build(modelList, actor.ModelName, actor.Name);
-        pack[$"Actor/ModelList/{actor.Name}.bmodellist"] = modelList.ToBinary();
-
         AampFile physics = PhysicsBuilder.Build(actor.ModelName, actor.Name);
         pack[$"Actor/Physics/{actor.Name}.bphysics"] = physics.ToBinary();
 
-        ActorLinkBuilder.Build(actorLink, lifeConditionUser, actor.Name, actor.Name);
+        ActorLinkBuilder.Build(actorLink, lifeConditionUser, actor.Name, actor.Name,
+            updateModelList: actor.UseCustomModel);
         pack[$"Actor/ActorLink/{actor.Name}.bxml"] = actorLink.ToBinary();
 
         pack[$"Physics/RigidBody/{actor.ModelName}/{actor.Name}.hkrb"]
@@ -113,7 +116,7 @@ public static class HkActorBuilder
         entry["name"] = actor.Name;
         entry["profile"] = "MapDynamicActive";
 
-        if (actor.CustomModelBfresPath is not null) {
+        if (actor.UseCustomModel) {
             entry["bfres"] = actor.ModelName;
             entry["mainModel"] = actor.Name;
         }
