@@ -11,8 +11,8 @@ public static class Commands
     /// Builds a custom havok actor.
     /// </summary>
     /// <param name="hkrb">The absolute path to the input HKRB (havok rigid-body) file.</param>
-    /// <param name="actorName">The output actor name.</param>
-    /// <param name="outputModPath">The absolute path to the output mod folder.</param>
+    /// <param name="actorName">The name of the actor to create.</param>
+    /// <param name="outputMod">The absolute path to the output mod folder.</param>
     /// <param name="modelName">The actor bfres name.</param>
     /// <param name="baseActorName">The name of the vanilla actor to base the new actor on.</param>
     /// <param name="useCustomModel">Update the actor info and model list to use the specified actor and model name.</param>
@@ -20,14 +20,17 @@ public static class Commands
     /// <returns></returns>
     public static void BuildCommand(
         [Argument] string hkrb,
-        [Argument] string actorName,
-        [Argument] string outputModPath,
+        string? outputMod = null,
+        string? actorName = null,
         string? modelName = null,
         string? baseActorName = null,
         bool useCustomModel = false,
         float lifeCondition = 500)
     {
-        string outputActorPath = Path.Combine(outputModPath, "Actor", "Pack", $"{actorName}.sbactorpack");
+        outputMod ??= Path.Combine("Build", "content");
+        actorName ??= Path.GetFileNameWithoutExtension(hkrb);
+        
+        string outputActorPath = Path.Combine(outputMod, "Actor", "Pack", $"{actorName}.sbactorpack");
         if (!File.Exists(outputActorPath)) {
             goto Run;
         }
@@ -41,7 +44,7 @@ public static class Commands
     Run:
         var watch = Stopwatch.StartNew();
         
-        HkActor actor = new(hkrb, actorName, outputModPath, modelName, baseActorName, useCustomModel, lifeCondition);
+        HkActor actor = new(hkrb, actorName, outputMod, modelName, baseActorName, useCustomModel, lifeCondition);
         HkActorBuildResults? results = HkActorBuilder.Build(actor);
         
         watch.Stop();
