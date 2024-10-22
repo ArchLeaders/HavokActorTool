@@ -6,10 +6,11 @@ public sealed partial class HkActor(
     string hkrbFilePath,
     string name,
     string outputModFolder,
-    string? modelName,
+    string? modelName = null,
     string? baseActorName = null,
     bool useCustomModel = false,
-    float lifeCondition = 500) : ObservableObject
+    float lifeCondition = 500)
+    : ObservableObject
 {
     [ObservableProperty]
     private string _hkrbFilePath = hkrbFilePath;
@@ -31,4 +32,8 @@ public sealed partial class HkActor(
 
     [ObservableProperty]
     private float _lifeCondition = lifeCondition;
+
+    public HkActor() : this(string.Empty, string.Empty, string.Empty)
+    {
+    }
 }
