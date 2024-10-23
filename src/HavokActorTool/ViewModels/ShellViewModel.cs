@@ -74,7 +74,7 @@ public sealed partial class ShellViewModel : ObservableObject
             Watermark = gamePathNxTip
         };
         
-        ToolTip.SetTip(gameUpdatePathTextBox, gamePathNxTip);
+        ToolTip.SetTip(gamePathNxTextBox, gamePathNxTip);
         
         TaskDialog errorDialog = new() {
             Title = "Settings",
