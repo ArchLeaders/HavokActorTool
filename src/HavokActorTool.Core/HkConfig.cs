@@ -1,22 +1,39 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using ConfigFactory.Core;
-using ConfigFactory.Core.Attributes;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HavokActorTool.Core;
 
-public sealed partial class HkConfig : ConfigModule<HkConfig>
+public sealed class HkConfig
 {
-    public override string Name => nameof(HavokActorTool);
+    private static readonly string _path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "HavokActorTool", "Config.json");
     
-    [ObservableProperty]
-    [property: Config(
-        Header = "Game Update Path",
-        Description = "The absolute path to your dumped WiiU BotW game update dump.")]
-    private string _gameUpdatePath = string.Empty;
+    public static readonly HkConfig Shared = Load();
     
-    [ObservableProperty]
-    [property: Config(
-        Header = "Game Path (NX)",
-        Description = "The absolute path to your dumped Switch (NX) BotW game dump.")]
-    private string _gamePathNx = string.Empty;
+    public static HkConfig Load()
+    {
+        if (!File.Exists(_path)) {
+            return new HkConfig();
+        }
+        
+        using FileStream fs = File.OpenRead(_path);
+        return JsonSerializer.Deserialize(fs, HkConfigJsonContext.Default.HkConfig)
+               ?? new HkConfig();
+    }
+
+    public string GameUpdatePath { get; set; } = string.Empty;
+    
+    public string GamePathNx { get; set; } = string.Empty;
+
+    public void Save()
+    {
+        if (Path.GetDirectoryName(_path) is string folder) {
+            Directory.CreateDirectory(folder);
+        }
+        
+        using FileStream fs = File.Create(_path);
+        JsonSerializer.Serialize(fs, this, HkConfigJsonContext.Default.HkConfig);
+    }
 }
+
+[JsonSerializable(typeof(HkConfig))]
+public sealed partial class HkConfigJsonContext : JsonSerializerContext;
