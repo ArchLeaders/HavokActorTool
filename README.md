@@ -1,37 +1,38 @@
-# HavokActorTool
+# Havok Actor Tool
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?color=663f9e&style=for-the-badge)](https://github.com/ArchLeaders/HavokActorTool/blob/master/License.md) [![Downloads](https://img.shields.io/github/v/tag/ArchLeaders/HavokActorTool?label=Release&logo=GitHub&color=b33126&style=for-the-badge)](https://github.com/ArchLeaders/HavokActorTool/releases)
 
 Simple tool for creating actors with appended collision rigid body files (HKRB).
 
-## Usage:
+<img src=".gamebanana/screenshots/main.jpg" width="650" />
+
+## CLI Usage
 
 ```
-HavokActorTool.exe <path/to/file.hkrb> [-s|--switch] [-f|-formatname] [-n|--newmodel] [-b <ACTORNAME>|-baseactor <ACTORNAME>]
+HavokActorTool.exe [arguments...] [options...] [-h|--help] [--version]
 ```
 
-- **`-s` | `-switch`**
-  
-  - Run in Switch mode. <br>
-    *Note: Cafe resource (BFRES) parsing currently only works in WiiU mode.*
-  
-- **`-f` | `-formatname` | `-format`**
+### Arguments
 
-  - Format the HKRB filename (which is the resulting actor name) to match the BOTW naming scheme.<br>
-    ***e.g.** The file `Example.hkrb` by default creates an actor named `Example`, using `-f` will make an actor named `FldObj_Example_A_01`.*
-  
-- **`-n` | `-newmodel`**
+  - <ins>[string]</ins> | The absolute path to the input HKRB (havok rigid-body) file.`
 
-  - Using this flag sets the new actors ModelList user to a new ModelList named after the actor.<br>
-    By default, the base actor model name will be used.
-  
-- **`-b <ACTORNAME>` | `-baseactor <ACTORNAME>` | `-base <ACTORNAME>`**
+### Options
 
-  - Assign a base actor to be used when generating the actor. By default, an actor is chosen based on the closest matching HKRB size.<br>
-    *Note: Assigning a base actor could make the [instSize](https://zeldamods.org/wiki/ActorInfo.product.sbyml#Actors) unstable, if the game crashes when
-    loading your actor try increasing the value by a margin of `1,000-10,000`
-    until it works.*
+  - `--output-mod` <ins>[string?]</ins>
+    - The absolute path to the output mod folder. (Default: null)
+  - `--actor-name` <ins>[string?]</ins>
+    - The name of the actor to create. (Default: null)
+  - `--model-name` <ins>[string?]</ins>
+    - The actor bfres name. (Default: null)
+  - `--base-actor-name` <ins>[string?]</ins>
+    - The name of the vanilla actor to base the new actor on. (Default: null)
+  - `--use-custom-model`
+    - Update the actor info and model list to use the specified actor and model name. (Optional)
+  - `--life-condition` <ins>[float]</ins>
+    - The life condition distance in meters. (Default: 500)
 
-## Thanks:
+## Special thanks to,
 
-**GingerAvalanche**: ActorInfo help, BYML library.<br>
-**KillzXGaming**: Library help and creation.<br>
-**Nivium**: Debugging and early testing.<br>
+- **GingerAvalanche**: ActorInfo help, BYML library.
+- **KillzXGaming**: Library help and creation.
+- **Nivium**: Debugging and early testing.
