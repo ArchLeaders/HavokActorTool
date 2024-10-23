@@ -1,0 +1,70 @@
+<uiw:AppWindow xmlns="https://github.com/avaloniaui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:uiw="using:FluentAvalonia.UI.Windowing"
+               xmlns:vm="using:HavokActorTool.ViewModels"
+               mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+               x:Class="HavokActorTool.Views.ShellView"
+               x:DataType="vm:ShellViewModel"
+               Width="650"
+               MinWidth="450"
+               Height="500"
+               MinHeight="450"
+               Title="Havok Actor Tool">
+    <Grid RowDefinitions="*,Auto" Margin="15">
+        <StackPanel Spacing="15">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox Text="{Binding Actor.HkrbFilePath}"
+                         Watermark="HKRB file"
+                         ToolTip.Tip="HKRB file" />
+                <Button Content="..."
+                        VerticalAlignment="Top"
+                        Grid.Column="1"
+                        ToolTip.Tip="Browse for an HKRB file."
+                        Command="{Binding BrowseHkrbCommand}"
+                        Margin="15,0,0,0" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox Text="{Binding Actor.OutputModFolder}"
+                         Watermark="Output mod folder"
+                         ToolTip.Tip="Output mod folder" />
+                <Button Content="..."
+                        VerticalAlignment="Top"
+                        Grid.Column="1"
+                        ToolTip.Tip="Browse for a mod folder."
+                        Command="{Binding BrowseModFolderCommand}"
+                        Margin="15,0,0,0" />
+            </Grid>
+            <TextBox Text="{Binding Actor.Name}"
+                     Watermark="Actor name"
+                     ToolTip.Tip="Actor name" />
+            <TextBox Text="{Binding Actor.ModelName}"
+                     Watermark="Actor model name"
+                     ToolTip.Tip="Actor model name" />
+            <Grid ColumnDefinitions="*,15,*">
+                <TextBox Text="{Binding Actor.BaseActorName}"
+                         Watermark="Base actor name (optional)"
+                         VerticalAlignment="Top"
+                         ToolTip.Tip="Base actor name (optional)" />
+                <NumericUpDown Value="{Binding Actor.LifeCondition}"
+                               Grid.Column="2"
+                               VerticalAlignment="Top"
+                               Watermark="Life condition (de-spawn distance)"
+                               Increment="100"
+                               Minimum="100"
+                               Maximum="100000"
+                               FormatString="{}{0}m"
+                               ToolTip.Tip="Life condition (de-spawn distance)" />
+            </Grid>
+            <CheckBox IsChecked="{Binding Actor.UseCustomModel}"
+                      Content="Update model list with actor and actor model name." />
+        </StackPanel>
+
+        <Button Grid.Row="1"
+                Content="Go forth!"
+                HorizontalAlignment="Right"
+                Classes="accent"
+                Command="{Binding BuildCommand}" />
+    </Grid>
+</uiw:AppWindow>

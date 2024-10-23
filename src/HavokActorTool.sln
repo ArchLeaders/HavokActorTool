@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HavokActorTool", "HavokActorTool\HavokActorTool.csproj", "{7140E8CC-6956-4850-8813-ADB85C1A5CD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HavokActorTool.Core", "HavokActorTool.Core\HavokActorTool.Core.csproj", "{02C930F7-3990-414E-A7ED-E0DC11471E80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7140E8CC-6956-4850-8813-ADB85C1A5CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7140E8CC-6956-4850-8813-ADB85C1A5CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7140E8CC-6956-4850-8813-ADB85C1A5CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7140E8CC-6956-4850-8813-ADB85C1A5CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02C930F7-3990-414E-A7ED-E0DC11471E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C930F7-3990-414E-A7ED-E0DC11471E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C930F7-3990-414E-A7ED-E0DC11471E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C930F7-3990-414E-A7ED-E0DC11471E80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB5B5AA9-CCF1-42CE-81F9-389F659F2489}
+	EndGlobalSection
+EndGlobal

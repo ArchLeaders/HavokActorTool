@@ -63,7 +63,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          dotnet publish ${{ env.proj }} \
+          dotnet publish src/${{ env.proj }} \
           -c Release \
           -o ${{ matrix.config.runtime }} \
           -r ${{ matrix.config.runtime }} \
