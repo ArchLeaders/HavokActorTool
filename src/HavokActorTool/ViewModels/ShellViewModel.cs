@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Avalonia.Controls;
 using Avalonia.Controls.Documents;
@@ -54,6 +55,53 @@ public sealed partial class ShellViewModel : ObservableObject
         }
         
         Actor.OutputModFolder = path;
+    }
+
+    [RelayCommand]
+    private static async Task Settings()
+    {
+        const string gameUpdatePathTip = "Game Update Path (WiiU)";
+        TextBox gameUpdatePathTextBox = new() {
+            Text = HkConfig.Shared.GameUpdatePath,
+            Watermark = gameUpdatePathTip
+        };
+        
+        ToolTip.SetTip(gameUpdatePathTextBox, gameUpdatePathTip);
+        
+        const string gamePathNxTip = "Game Path (NX)";
+        TextBox gamePathNxTextBox = new() {
+            Text = HkConfig.Shared.GamePathNx,
+            Watermark = gamePathNxTip
+        };
+        
+        ToolTip.SetTip(gameUpdatePathTextBox, gamePathNxTip);
+        
+        TaskDialog errorDialog = new() {
+            Title = "Settings",
+            XamlRoot = App.XamlRoot,
+            Content = new StackPanel {
+                Spacing = 15,
+                Children = {
+                    gameUpdatePathTextBox,
+                    gamePathNxTextBox
+                }
+            },
+            Buttons = [
+                TaskDialogButton.OKButton
+            ]
+        };
+        
+        await errorDialog.ShowAsync();
+
+        if (gameUpdatePathTextBox.Text is { } gameUpdatePath) {
+            HkConfig.Shared.GameUpdatePath = gameUpdatePath;
+        }
+
+        if (gamePathNxTextBox.Text is { } gamePathNx) {
+            HkConfig.Shared.GamePathNx = gamePathNx;
+        }
+        
+        HkConfig.Shared.Save();
     }
 
     [RelayCommand]

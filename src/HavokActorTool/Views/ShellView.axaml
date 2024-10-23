@@ -3,6 +3,7 @@
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:uiw="using:FluentAvalonia.UI.Windowing"
+               xmlns:ui="using:FluentAvalonia.UI.Controls"
                xmlns:vm="using:HavokActorTool.ViewModels"
                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                x:Class="HavokActorTool.Views.ShellView"
@@ -60,6 +61,11 @@
             <CheckBox IsChecked="{Binding Actor.UseCustomModel}"
                       Content="Update model list with actor and actor model name." />
         </StackPanel>
+
+        <Button Grid.Row="1"
+                Command="{Binding SettingsCommand}">
+            <ui:SymbolIcon Symbol="Setting" />
+        </Button>
 
         <Button Grid.Row="1"
                 Content="Go forth!"
