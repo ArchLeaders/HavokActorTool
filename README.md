@@ -4,7 +4,7 @@
 
 Simple tool for creating actors with appended collision rigid body files (HKRB).
 
-<img src=".gamebanana/screenshots/main.jpg" width="650" />
+<img src="assets/screenshots/main.jpg" width="650" />
 
 ## CLI Usage
 
