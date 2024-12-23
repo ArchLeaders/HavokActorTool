@@ -156,6 +156,10 @@ public static class HkActorBuilder
         actor.BaseActorName ??= HkActorCache.GetNearestActor(instSize);
         string actorPath = $"{(isNx ? HkConfig.Shared.GamePathNx : HkConfig.Shared.GameUpdatePath)}/Actor/Pack/{actor.BaseActorName}.sbactorpack";
 
+        if (!File.Exists(actorPath)) {
+            throw new FileNotFoundException($"The actor '{actor.BaseActorName}' is not a vanilla actor. Please change the 'Base Actor' field.");
+        }
+
         using FileStream fs = File.OpenRead(actorPath);
         int size = (int)fs.Length;
         using SpanOwner<byte> compressedActorPackBuffer = SpanOwner<byte>.Allocate(size);
