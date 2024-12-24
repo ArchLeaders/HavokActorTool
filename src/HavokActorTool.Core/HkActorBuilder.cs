@@ -153,9 +153,13 @@ public static class HkActorBuilder
 
     private static Sarc GetBaseActor(HkActor actor, long instSize, bool isNx)
     {
-        actor.BaseActorName ??= HkActorCache.GetNearestActor(instSize);
-        string actorPath = $"{(isNx ? HkConfig.Shared.GamePathNx : HkConfig.Shared.GameUpdatePath)}/Actor/Pack/{actor.BaseActorName}.sbactorpack";
+        string actorPath = GetBaseActorPath(actor, isNx);
 
+        if (!File.Exists(actorPath)) {
+            actor.BaseActorName = HkActorCache.GetNearestActor(instSize);
+            actorPath = GetBaseActorPath(actor, isNx);
+        }
+        
         if (!File.Exists(actorPath)) {
             throw new FileNotFoundException($"The actor '{actor.BaseActorName}' is not a vanilla actor. Please change the 'Base Actor' field.");
         }
@@ -182,5 +186,10 @@ public static class HkActorBuilder
                || Path.GetFileName(outputModFolder[^1] is '/' or '\\' ? outputModFolder[..^1] : outputModFolder) is "romfs";
 
         return hkrbFile.Exists;
+    }
+    
+    private static string GetBaseActorPath(HkActor actor, bool isNx)
+    {
+        return $"{(isNx ? HkConfig.Shared.GamePathNx : HkConfig.Shared.GameUpdatePath)}/Actor/Pack/{actor.BaseActorName}.sbactorpack";
     }
 }
